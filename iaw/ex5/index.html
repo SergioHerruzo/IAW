@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari Pràctica 1_5</title>
+</head>
+<body>
+    <form method="post" action="file.php">
+        <label>Preu base (€):</label>
+        <input type="number" name="preu" step="0.01" required><br><br>
+        <input type="radio" name="iva" value="21" required> 21 %<br>
+        <input type="radio" name="iva" value="10"> 10 %<br>
+        <input type="radio" name="iva" value="5"> 5 %<br>
+        <input type="radio" name="iva" value="0"> 0 %<br><br>
+        <input type="submit" name="enviar" value="Enviar">
+    </form>
+</body>
+</html>
