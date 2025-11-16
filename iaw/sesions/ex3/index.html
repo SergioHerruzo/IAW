@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Cistella</title></head><body>
+<h2>Productes</h2>
+<form action="cistella_compra.php" method="post" onsubmit="return validar(this)">
+<p><strong>Vi Les Terrasses</strong> - 39.00 €<br>
+<label>Quantitat: <input type="number" name="q1" min="0" value="0"></label>
+<input type="submit" name="add1" value="Afegir"></p>
+<p><strong>Vi Priorat Reserva</strong> - 55.00 €<br>
+<label>Quantitat: <input type="number" name="q2" min="0" value="0"></label>
+<input type="submit" name="add2" value="Afegir"></p>
+</form>
+<a href="finalitzar.php">Finalitzar compra</a>
+<script>
+function validar(f){var q1=f.q1.value;var q2=f.q2.value;var a1=f.add1&&f.add1.clicked;var a2=f.add2&&f.add2.clicked;if((a1&&q1<=0)||(a2&&q2<=0))return false;return true;}
+</script>
+</body></html>

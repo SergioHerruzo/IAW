@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Botiga</title></head><body>
+<h2>Afegeix producte</h2>
+<form action="botiga.php" method="post" onsubmit="return validar()">
+<label>Producte: <select name="producte" required><option value="Vi Les Terrasses">Vi Les Terrasses</option><option value="Vi Priorat Reserva">Vi Priorat Reserva</option></select></label><br>
+<label>Preu: <input type="number" step="0.01" name="preu" required></label><br>
+<label>Quantitat: <input type="number" name="quantitat" min="1" required></label><br>
+<input type="submit" value="Afegir">
+</form>
+<a href="finalitzar.php">Finalitzar compra</a>
+<script>
+function validar(){return true;}
+</script>
+</body></html>
