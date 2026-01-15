@@ -1,0 +1,27 @@
+<?php
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: acces.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvingut a ReceptesDelicades</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <?php include 'header.php'; ?>
+    <div class="container" style="text-align: center; margin-top: 5rem;">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem;">Comparteix el teu Art Culinari</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--muted-text);">La millor plataforma per a Cuiners i Amants del menjar.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="login.php" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">Entrar</a>
+            <a href="register.php" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem;">Registrar-se</a>
+        </div>
+    </div>
+</body>
+</html>
