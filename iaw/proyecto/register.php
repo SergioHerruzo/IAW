@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = $_POST['confirm_password'];
     $role = $_POST['role'];
 
-    // Validations
+    // Validaciones
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
         $error = "Tots els camps són obligatoris.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!in_array($role, ['Cuiner', 'Visitant'])) {
         $error = "Rol invàlid.";
     } else {
-        // Check duplicate email
+        // Comprobar email duplicado
         $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
         $check->bind_param("s", $email);
         $check->execute();
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check->num_rows > 0) {
             $error = "Aquest email ja està registrat.";
         } else {
-            // Register user
+            // Registrar usuario
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $username, $email, $hashed_password, $role);

@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Format d'email invàlid.";
     } else {
+        // Validar credenciales
         $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -27,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_result($id, $username, $hashed_password, $role);
             $stmt->fetch();
 
+            // Verificar contraseña
             if (password_verify($password, $hashed_password)) {
+                // Iniciar sesión
                 $_SESSION['user_id'] = $id;
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = $role;

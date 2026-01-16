@@ -2,7 +2,7 @@
 session_start();
 require_once 'db_connect.php';
 
-// Auth check
+// Verificación de autenticación
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -11,18 +11,18 @@ if (!isset($_SESSION['user_id'])) {
 $user_role = $_SESSION['role'];
 $msg = $_GET['msg'] ?? '';
 
-// Search and Sort logic
+// Lógica de búsqueda y ordenación
 $search = $_GET['search'] ?? '';
-$sort = $_GET['sort'] ?? 'rating'; // Default sort by rating
+$sort = $_GET['sort'] ?? 'rating'; // Ordenación por defecto por valoración
 
 $sql = "SELECT r.*, u.username FROM recipes r JOIN users u ON r.user_id = u.id WHERE 1=1";
 $params = [];
 $types = "";
 
 if ($search) {
-    // Search by title, category, or ingredient (requires join, for now keeping simple on main table)
-    // To search ingredients we need a subquery or join. Let's do a left join approach for ingredients filtering
-    // Actually simpler: SELECT DISTINCT r.* from recipes r ...
+    // Buscar por título, categoría o ingrediente (requiere unión)
+    // Para buscar ingredientes necesitamos una subconsulta o unión. Hacemos left join para filtrar por ingredientes.
+    // Realmente más simple: SELECT DISTINCT r.* from recipes r ...
     
     $search_term = "%$search%";
     $sql = "SELECT DISTINCT r.*, u.username FROM recipes r 
@@ -35,11 +35,11 @@ if ($search) {
     $types .= "sss";
 }
 
-// Order by
+// Ordenar por
 if ($sort === 'date') {
     $sql .= " ORDER BY r.created_at DESC";
 } else {
-    $sql .= " ORDER BY r.rating DESC, r.created_at DESC"; // Primary rating, secondary date
+    $sql .= " ORDER BY r.rating DESC, r.created_at DESC"; // Valoración primaria, fecha secundaria
 }
 
 $stmt = $conn->prepare($sql);
@@ -69,7 +69,7 @@ $result = $stmt->get_result();
             <?php endif; ?>
         </div>
 
-        <!-- Search and Filter -->
+        <!-- Buscar y Filtrar -->
         <div style="background-color: var(--card-bg); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
             <form action="acces.php" method="GET" style="display: flex; gap: 1rem; flex: 1; align-items: center;">
                 <input type="text" name="search" placeholder="Cercar per nom, categoria o ingredient..." value="<?php echo htmlspecialchars($search); ?>" style="flex: 1;">

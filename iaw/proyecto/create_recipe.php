@@ -2,9 +2,9 @@
 session_start();
 require_once 'db_connect.php';
 
-// Auth check
+// Verificación de autenticación
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Cuiner') {
-    header("Location: acces.php"); // Or error page
+    header("Location: acces.php"); // O página de error
     exit();
 }
 
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
     $category = trim($_POST['category']);
-    // Ingredients are passed as arrays
+    // Los ingredientes se pasan como arrays
     $ingredients_names = $_POST['ingredient_name'] ?? [];
     $ingredients_qtys = $_POST['ingredient_qty'] ?? [];
 
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $user_id = $_SESSION['user_id'];
         
-        // Transaction to ensure recipe and ingredients are added together
+        // Transacción para asegurar que receta e ingredientes se añaden juntos
         $conn->begin_transaction();
 
         try {
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $recipe_id = $conn->insert_id;
             $stmt->close();
 
-            // Add Ingredients
+            // Añadir ingredientes
             if (!empty($ingredients_names)) {
                 $stmt_ing = $conn->prepare("INSERT INTO ingredients (recipe_id, name, quantity) VALUES (?, ?, ?)");
                 for ($i = 0; $i < count($ingredients_names); $i++) {

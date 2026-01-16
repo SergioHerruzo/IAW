@@ -11,7 +11,7 @@ $recipe_id = $_GET['id'] ?? 0;
 $user_id = $_SESSION['user_id'];
 $error = '';
 
-// Fetch existing recipe
+// Obtener receta existente
 $stmt = $conn->prepare("SELECT * FROM recipes WHERE id = ? AND user_id = ?");
 $stmt->bind_param("ii", $recipe_id, $user_id);
 $stmt->execute();
@@ -23,7 +23,7 @@ if (!$recipe) {
     exit();
 }
 
-// Fetch ingredients
+// Obtener ingredientes
 $stmt_i = $conn->prepare("SELECT * FROM ingredients WHERE recipe_id = ?");
 $stmt_i->bind_param("i", $recipe_id);
 $stmt_i->execute();
@@ -47,14 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $conn->begin_transaction();
         try {
-            // Update Recipe
+            // Actualizar receta
             $stmt = $conn->prepare("UPDATE recipes SET title = ?, description = ?, category = ? WHERE id = ?");
             $stmt->bind_param("sssi", $title, $description, $category, $recipe_id);
             $stmt->execute();
             $stmt->close();
 
-            // Replace Ingredients (Delete all and re-insert)
-            // This is simpler than tracking IDs for updates
+            // Reemplazar ingredientes (Borrar todos y reinsertar)
+            // Esto es más simple que rastrear IDs para actualizaciones
             $stmt_del = $conn->prepare("DELETE FROM ingredients WHERE recipe_id = ?");
             $stmt_del->bind_param("i", $recipe_id);
             $stmt_del->execute();
@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="padding: 0 10px;">X</button>
                         </div>
                     <?php endforeach; ?>
-                    <!-- If no ingredients, show one empty row -->
+                    <!-- Si no hay ingredientes, mostrar una fila vacía -->
                     <?php if (empty($ing_data)): ?>
                         <div class="ingredient-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
                             <input type="text" name="ingredient_name[]" placeholder="Nom ingredient" required style="flex: 2;">

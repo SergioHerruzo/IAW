@@ -13,6 +13,7 @@
     <div class="logo">
         <a href="acces.php">🍲 ReceptesDelicades</a>
     </div>
+    <!-- Barra de navegación -->
     <nav>
         <ul>
             <?php if (isset($_SESSION['user_id'])): ?>

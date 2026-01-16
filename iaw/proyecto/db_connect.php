@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $user = 'root';
-$pass = ''; // Default XAMPP password is empty
+$pass = ''; // La contraseña por defecto de XAMPP está vacía
 $db_name = 'recipe_platform';
 
 $conn = new mysqli($host, $user, $pass);
@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Create database if not exists (redundant if using db.sql manually, but good for auto-setup feel)
+// Crear base de datos si no existe
 $sql = "CREATE DATABASE IF NOT EXISTS $db_name";
 if ($conn->query($sql) === TRUE) {
     $conn->select_db($db_name);
@@ -18,6 +18,6 @@ if ($conn->query($sql) === TRUE) {
     die("Error creating database: " . $conn->error);
 }
 
-// Charset
+// Configurar conjunto de caracteres
 $conn->set_charset("utf8mb4");
 ?>
